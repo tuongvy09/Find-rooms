@@ -1,0 +1,72 @@
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao tối thiểu bằng chiều cao viewport */
+}
+
+.content {
+    flex-grow: 1; /* Chiếm hết không gian còn lại giữa header và footer */
+    padding: 0px; /* Thêm khoảng cách cho nội dung */
+}
+
+.footer {
+    background-color: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+}
+
+.h1-container {
+    padding: 20px;
+    background-color: #FFFFFF; /* Màu nền cho div */
+    text-align: right; /* Căn giữa nội dung trong div */
+}
+
+.rounded-button {
+    border-radius: 10px; /* Bo tròn nút */
+    font-family: 'Times New Roman', Times, serif; /* Font chữ */
+    background-color: #7A67EE; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    padding: 15px 25px; /* Padding cho nút */
+    border: none; /* Bỏ viền */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    font-size: 18px;
+}
+
+.tk-button {
+    border-radius: 10px; /* Bo tròn nút */
+    font-family: 'Times New Roman', Times, serif; /* Font chữ */
+    background-color: transparent; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    padding: 15px 25px; /* Padding cho nút */
+    border: none; /* Bỏ viền */
+    cursor: pointer; /* Con trỏ chuột khi hover */
+    font-size: 18px;
+}
+
+.rounded-button:hover {
+    background-color: #6b5bc3; /* Màu nền khi hover */
+}
+
+h1 {
+    font-family: 'Times New Roman', Times, serif; /* Font chữ cho tất cả các h1 */
+    font-size: 35px; /* Kích thước chữ */
+    margin: 10; /* Bỏ margin mặc định */
+}
+h2 {
+    font-family: 'Times New Roman', Times, serif; /* Font chữ cho tất cả các h1 */
+    font-size: 25px; /* Kích thước chữ */
+    margin: 10; /* Bỏ margin mặc định */
+}
+h6 {
+    font-family: 'Times New Roman', Times, serif; /* Font chữ cho tất cả các h1 */
+    font-size: 18px; /* Kích thước chữ */
+    margin: 0; /* Bỏ margin mặc định */
+}
+.horizontal-line {
+    width: 100%; /* Chiều rộng của đường kẻ */
+    height: 0%; /* Độ dày của đường kẻ */
+    background-color: #000; /* Màu sắc của đường kẻ */
+    margin-top: 10px; /* Khoảng cách từ tiêu đề */
+    margin-bottom: 10px; /* Khoảng cách dưới đường kẻ */
+}
