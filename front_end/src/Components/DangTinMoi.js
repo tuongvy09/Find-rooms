@@ -1,7 +1,7 @@
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import DescriptionIcon from '@mui/icons-material/Description';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import { Box, FormControl, InputLabel, List, ListItemButton, ListItemIcon, ListItemText, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, FormControl, IconButton, ImageList, InputLabel, List, ListItemButton, ListItemIcon, ListItemText, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../App.css';
@@ -37,13 +37,13 @@ const TextFieldWithoutLabel = ({ value, onChange, placeholder }) => {
       onChange={onChange}
       variant="outlined"
       size="small"
-      placeholder={placeholder} // Sử dụng placeholder để hiển thị hướng dẫn
+      placeholder={placeholder}
       fullWidth
       InputLabelProps={{
-        style: { display: 'none' }, // Ẩn nhãn nếu cần
+        style: { display: 'none' },
       }}
       inputProps={{
-        style: { fontSize: '14px' }, // Kích thước chữ bên trong
+        style: { fontSize: '14px' },
       }}
     />
   );
@@ -57,8 +57,7 @@ const DangTinMoi = () => {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedWard, setSelectedWard] = useState(null);
   const [address, setAddress] = useState('');
-
-  const fullAddress = `${selectedProvince ? selectedProvince.name : ''}, ${selectedDistrict ? selectedDistrict.name : ''}, ${selectedWard ? selectedWard.name : ''}, ${address}`;
+  const fullAddress = `${address} ${selectedWard ? selectedWard.name : ''} ${selectedDistrict ? selectedDistrict.name : ''} ${selectedProvince ? selectedProvince.name : ''}`;
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -72,6 +71,7 @@ const DangTinMoi = () => {
 
     fetchProvinces();
   }, []);
+
   const handleProvinceChange = (newValue) => {
     setSelectedProvince(newValue);
     setSelectedDistrict(null);
@@ -90,8 +90,9 @@ const DangTinMoi = () => {
     setSelectedWard(newValue);
     console.log('Selected Ward:', newValue);
   };
+
   return (
-    <Box sx={{ display: 'flex', height: '100vh' }}>
+    <Box sx={{ display: 'flex', height: '300vh' }}>
       {/* Cột bên trái */}
       <Box
         sx={{
@@ -168,14 +169,133 @@ const DangTinMoi = () => {
             <TextFieldWithoutLabel
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              placeholder="Tên đường, số nhà"
+              placeholder="Số nhà, tên đường"
             />
           </div>
         </div>
         <Box sx={{ marginTop: 2 }}>
-          <Typography variant="h6">Địa chỉ đã nhập:</Typography>
-          <Typography variant="body1">{fullAddress}</Typography>
+          <h2>Địa chỉ chính xác</h2>
+          <TextField
+            variant="outlined" // Sử dụng variant filled
+            value={fullAddress}
+            size='small'
+            InputProps={{
+              readOnly: true, // Đặt trường này ở chế độ chỉ đọc
+              sx: { bgcolor: '#f0f0f0' }, // Thiết lập màu nền
+            }}
+            fullWidth
+            sx={{ marginTop: 1 }} // Thêm khoảng cách trên
+          />
         </Box>
+        <h2>Thông tin mô tả</h2>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Loại chuyên đề</Typography>
+        <FormControl sx={{ m: 1, minWidth: 300 }}>
+          <Select native defaultValue="" id="grouped-native-select">
+            <option aria-label="None" value="" >--Chọn loại chuyên mục--</option>
+            <option value={1}>Nhà trọ, phòng trọ</option>
+            <option value={2}>Nhà nguyên căn</option>
+            <optgroup label="Căn hộ">
+              <option value={3}>Cho thuê căn hộ</option>
+              <option value={4}>Cho thuê căn hộ mini</option>
+              <option value={5}>Cho thuê căn hộ dịch vụ</option>
+            </optgroup>
+            <option value={2}>Cho thuê mặt bằng, văn phòng</option>
+          </Select>
+        </FormControl>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Tiêu đề</Typography>
+        <TextField id="outlined-basic" variant="outlined" fullWidth />
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Nội dung miêu tả</Typography>
+        <TextField id="outlined-basic" variant="outlined" fullWidth InputProps={{ style: { height: '200px' } }} />
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Thông tin liên hệ</Typography>
+        <TextField
+          variant="outlined" // Sử dụng variant filled
+          size='small'
+          InputProps={{
+            readOnly: true, // Đặt trường này ở chế độ chỉ đọc
+            sx: { bgcolor: '#f0f0f0', width: '300px' }, // Thiết lập màu nền
+          }} // Thêm khoảng cách trên
+        />
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Điện thoại</Typography>
+        <TextField
+          variant="outlined" // Sử dụng variant filled
+          size='small'
+          InputProps={{
+            readOnly: true, // Đặt trường này ở chế độ chỉ đọc
+            sx: { bgcolor: '#f0f0f0', width: '300px' }, // Thiết lập màu nền
+          }} // Thêm khoảng cách trên
+        />
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Giá cho thuê</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: '600px' }}>
+          <TextField
+            id="outlined-amount"
+            variant="outlined"
+            size='small'
+            sx={{ flex: 1 }} // Tạo khoảng cách bên phải
+          />
+          <FormControl variant="outlined" sx={{ minWidth: '120px' }}>
+            <InputLabel id="currency-label"></InputLabel>
+            <Select
+              labelId="currency-label"
+              size='small'
+              id="currency-select"
+              defaultValue="dong_thang"
+            >
+              <MenuItem value="dong_thang">Đồng/tháng</MenuItem>
+              <MenuItem value="dong_m2_thang">Đồng/m²/tháng</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Diện tích</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: '600px' }}>
+          <TextField
+            id="amount-field"
+            variant="outlined"
+            size='small'
+            fullWidth
+            type="number"
+          />
+          <TextField
+            id="area-field"
+            variant="outlined"
+            size='small'
+            value="m²"
+            InputProps={{ readOnly: true }}
+            sx={{ backgroundColor: '#f0f0f0' }}
+          />
+        </Box>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Đối tượng cho thuê</Typography>
+        <Select
+          size='small'
+          id="object-select"
+          defaultValue="null"
+          sx={{ minWidth: '120px', width: '300px' }}
+        >
+
+          <MenuItem value="null">--Tất cả--</MenuItem>
+          <MenuItem value="nam">Nam</MenuItem>
+          <MenuItem value="nu">Nữ</MenuItem>
+        </Select>
+        <Typography sx={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'Times New Roman' }}>Số lượng tối đa</Typography>
+        <TextField
+          id="amountpoeple-field"
+          variant="outlined"
+          size='small'
+          sx={{ width: '300px' }}
+          type="number"
+        />
+        <h2>Hình ảnh</h2>
+        <p className='custom-fontp'>Cập nhật hình ảnh chi tiết sẽ được cho thuê nhanh hơn</p>
+        <IconButton>Upload hình ảnh</IconButton>
+        <Stack spacing={4}>
+          <ImageList
+            sx={{width: 500, height: 450}}
+            columns = {3}
+            rowHeight={164}>
+              {
+
+              }
+          </ImageList>
+        </Stack>
       </Box>
     </Box>
   );

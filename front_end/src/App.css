@@ -63,6 +63,10 @@ h6 {
     font-size: 18px; /* Kích thước chữ */
     margin: 0; /* Bỏ margin mặc định */
 }
+.custom-fontp {
+    font-family: 'Times New Roman', Times, serif; /* Thay đổi font chữ tại đây */
+    font-size: 17px; /* Kích thước chữ *//* Màu chữ */
+}
 .horizontal-line {
     width: 100%; /* Chiều rộng của đường kẻ */
     height: 0%; /* Độ dày của đường kẻ */
